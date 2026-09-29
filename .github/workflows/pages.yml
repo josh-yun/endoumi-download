@@ -33,10 +33,12 @@ jobs:
         run: |
           mkdir -p site/downloads
 
-          if gh release view --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+          release_tag="$(gh release list --repo "$GITHUB_REPOSITORY" --limit 1 --json tagName --jq '.[0].tagName // empty')"
+
+          if [[ -n "$release_tag" ]]; then
             temporary_dir="$RUNNER_TEMP/endoumi-release"
             mkdir -p "$temporary_dir"
-            gh release download --repo "$GITHUB_REPOSITORY" --dir "$temporary_dir"
+            gh release download "$release_tag" --repo "$GITHUB_REPOSITORY" --dir "$temporary_dir"
 
             macos_file="$(find "$temporary_dir" -maxdepth 1 -type f -name '*.dmg' -print -quit)"
             windows_file="$(find "$temporary_dir" -maxdepth 1 -type f -name '*.exe' -print -quit)"
@@ -47,8 +49,8 @@ jobs:
               cp "$windows_file" site/downloads/Endoumi-Windows-x64.exe
               [[ -z "$checksum_file" ]] || cp "$checksum_file" site/downloads/SHA256SUMS.txt
 
-              version="$(gh release view --repo "$GITHUB_REPOSITORY" --json tagName --jq '.tagName | ltrimstr("v")')"
-              published_at="$(gh release view --repo "$GITHUB_REPOSITORY" --json publishedAt --jq '.publishedAt[0:10]')"
+              version="${release_tag#v}"
+              published_at="$(gh release view "$release_tag" --repo "$GITHUB_REPOSITORY" --json publishedAt --jq '.publishedAt[0:10]')"
               jq -n \
                 --arg version "$version" \
                 --arg publishedAt "$published_at" \
