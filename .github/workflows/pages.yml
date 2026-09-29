@@ -1,0 +1,68 @@
+name: Publish download page
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - site/**
+      - .github/workflows/pages.yml
+  release:
+    types: [published]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: github-pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Prepare latest installers
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p site/downloads
+
+          if gh release view --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            temporary_dir="$RUNNER_TEMP/endoumi-release"
+            mkdir -p "$temporary_dir"
+            gh release download --repo "$GITHUB_REPOSITORY" --dir "$temporary_dir"
+
+            macos_file="$(find "$temporary_dir" -maxdepth 1 -type f -name '*.dmg' -print -quit)"
+            windows_file="$(find "$temporary_dir" -maxdepth 1 -type f -name '*.exe' -print -quit)"
+            checksum_file="$(find "$temporary_dir" -maxdepth 1 -type f -name 'SHA256SUMS.txt' -print -quit)"
+
+            if [[ -n "$macos_file" && -n "$windows_file" ]]; then
+              cp "$macos_file" site/downloads/Endoumi-macOS.dmg
+              cp "$windows_file" site/downloads/Endoumi-Windows-x64.exe
+              [[ -z "$checksum_file" ]] || cp "$checksum_file" site/downloads/SHA256SUMS.txt
+
+              version="$(gh release view --repo "$GITHUB_REPOSITORY" --json tagName --jq '.tagName | ltrimstr("v")')"
+              published_at="$(gh release view --repo "$GITHUB_REPOSITORY" --json publishedAt --jq '.publishedAt[0:10]')"
+              jq -n \
+                --arg version "$version" \
+                --arg publishedAt "$published_at" \
+                '{available: true, version: $version, publishedAt: $publishedAt}' \
+                > site/release.json
+            fi
+          fi
+
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+      - name: Deploy GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
