@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Windows와 macOS용 엔도우미 설치 파일을 내려받고 설치 방법을 확인하세요." />
+    <meta name="theme-color" content="#ffffff" />
+    <title>다운로드 · 엔도우미</title>
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="app.js" defer></script>
+  </head>
+  <body class="download-page">
+    <header class="site-header site-header-light" aria-label="주요 메뉴">
+      <a class="brand" href="index.html" aria-label="엔도우미 홈"><span class="brand-mark" aria-hidden="true">E</span><span class="brand-name">엔도우미</span></a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="primary-nav"><span class="sr-only">메뉴 열기</span><span aria-hidden="true"></span><span aria-hidden="true"></span></button>
+      <nav id="primary-nav" aria-label="주요 메뉴">
+        <a href="index.html#overview">제품 소개</a><a href="index.html#workflow">업무 흐름</a><a href="index.html#roles">역할별 기능</a><a href="index.html#operation">운영 방식</a><a class="nav-download active" href="download.html" aria-current="page">다운로드</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="download-hero">
+        <div class="download-heading reveal">
+          <p class="eyebrow dark">엔도우미 다운로드</p>
+          <h1>병원 환경에 맞는<br />설치 파일을 선택하세요.</h1>
+          <p>Windows와 macOS에서 엔도우미를 사용할 수 있습니다. 처음 설치한다면 아래 안내를 먼저 확인해 주세요.</p>
+        </div>
+        <div class="release-panel reveal">
+          <p class="release-label">최신 설치 파일</p>
+          <div class="release-actions">
+            <a class="platform-download" id="windows-download" href="https://github.com/josh-yun/endoumi-download/releases">
+              <span class="platform-icon" aria-hidden="true">Win</span><span><strong>Windows용</strong><small>Windows 10 · 11 / 64비트</small></span><span class="download-arrow" aria-hidden="true">↓</span>
+            </a>
+            <a class="platform-download" id="macos-download" href="https://github.com/josh-yun/endoumi-download/releases">
+              <span class="platform-icon" aria-hidden="true">Mac</span><span><strong>macOS용</strong><small>macOS 데스크톱</small></span><span class="download-arrow" aria-hidden="true">↓</span>
+            </a>
+          </div>
+          <p class="release-status" id="release-status" role="status">최신 버전을 확인하고 있습니다.</p>
+          <p class="release-note">현재 설치 파일은 시연과 사전 검증을 위한 배포본입니다. 실제 진료에 적용하기 전 병원 내부 검증이 필요합니다.</p>
+        </div>
+      </section>
+
+      <section class="quick-start section">
+        <div class="section-intro reveal"><p class="eyebrow dark">처음 시작하기</p><h2>설치부터 병원 연결까지<br />세 단계면 충분합니다.</h2></div>
+        <ol class="quick-start-list">
+          <li class="reveal"><span>01</span><div><h3>설치 파일 실행</h3><p>사용 중인 운영체제에 맞는 파일을 내려받아 설치합니다.</p></div></li>
+          <li class="reveal"><span>02</span><div><h3>첫 컴퓨터 설정</h3><p>병원에서 메인으로 사용할 컴퓨터를 정하고 서버 시작을 선택합니다.</p></div></li>
+          <li class="reveal"><span>03</span><div><h3>다른 컴퓨터 연결</h3><p>같은 네트워크의 컴퓨터에서 연결 코드를 입력하고 사용할 역할을 선택합니다.</p></div></li>
+        </ol>
+      </section>
+
+      <section class="install-help">
+        <div class="section install-help-inner">
+          <div class="section-intro light reveal"><p class="eyebrow">설치 중 안내가 필요할 때</p><h2>운영체제별 안내</h2><p class="section-description">코드 서명 전 배포본에서는 운영체제의 보안 안내가 표시될 수 있습니다.</p></div>
+          <div class="help-list reveal">
+            <details>
+              <summary><span>macOS</span><strong>앱을 열 수 없다는 안내가 표시될 때</strong></summary>
+              <div class="help-content"><ol><li>DMG에서 <strong>Endoumi</strong>를 <strong>응용 프로그램</strong> 폴더로 옮긴 뒤 DMG 창을 닫습니다.</li><li><strong>Finder → 응용 프로그램 → Endoumi</strong>를 열고, 경고가 표시되면 <strong>완료</strong>를 누릅니다.</li><li><strong>시스템 설정 → 개인정보 보호 및 보안</strong>의 보안 영역에서 <strong>그래도 열기</strong>를 선택합니다.</li><li>확인 창에서 앱 이름을 확인한 뒤 <strong>열기</strong>를 누릅니다.</li></ol><p>설정에 엔도우미가 보이지 않으면 응용 프로그램 폴더에서 앱을 다시 열어 경고를 띄운 직후 확인하세요. <a href="https://support.apple.com/ko-kr/102445" target="_blank" rel="noreferrer">Apple 공식 안내</a></p></div>
+            </details>
+            <details>
+              <summary><span>Windows</span><strong>“Windows의 PC 보호”가 표시될 때</strong></summary>
+              <div class="help-content"><ol><li>경고 창에서 <strong>추가 정보</strong>를 선택합니다.</li><li>파일 이름이 엔도우미 설치 파일인지 확인한 뒤 <strong>실행</strong>을 누릅니다.</li><li>실행 버튼이 없다면 병원 보안 정책에서 차단한 상태일 수 있으므로 전산 담당자에게 설치 허용을 요청합니다.</li></ol><p>설치를 위해 Windows 보안 기능 전체를 끄지는 마세요. <a href="https://learn.microsoft.com/ko-kr/windows/apps/package-and-deploy/smartscreen-reputation" target="_blank" rel="noreferrer">Microsoft 공식 안내</a></p></div>
+            </details>
+          </div>
+        </div>
+      </section>
+
+      <section class="download-resources section">
+        <div class="section-intro reveal"><p class="eyebrow dark">자료실</p><h2>제품 소개서도<br />함께 받아 보세요.</h2></div>
+        <div class="resource-links reveal">
+          <a href="downloads/Endoumi-Brochure-KO-A4.pdf" download><span><small>한국어 · PDF</small><strong>엔도우미 제품 소개서</strong></span><span aria-hidden="true">↓</span></a>
+          <a href="downloads/Endoumi-Brochure-EN-A4.pdf" download><span><small>English · PDF</small><strong>Endoumi product brochure</strong></span><span aria-hidden="true">↓</span></a>
+          <a href="https://github.com/josh-yun/endoumi-download/releases"><span><small>버전 정보</small><strong>이전 배포 기록 보기</strong></span><span aria-hidden="true">↗</span></a>
+        </div>
+      </section>
+
+      <section class="download-back"><p>엔도우미가 병원의 검사 흐름을 어떻게 잇는지 궁금하신가요?</p><a href="index.html">제품 소개로 돌아가기 <span aria-hidden="true">→</span></a></section>
+    </main>
+
+    <footer>
+      <a class="brand footer-brand" href="index.html"><span class="brand-mark" aria-hidden="true">E</span><span class="brand-name">엔도우미</span></a>
+      <p>내시경 업무를 더 매끄럽게</p><p>© 2026 CareNest</p>
+    </footer>
+  </body>
+</html>

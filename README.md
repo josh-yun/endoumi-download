@@ -1,8 +1,9 @@
-# 엔도우미 다운로드
+# 엔도우미 제품 홈페이지
 
-엔도우미 테스트 설치 파일과 제품 소개 페이지를 공개하는 저장소입니다.
+엔도우미 제품 소개와 설치 파일, 제품 소개서를 제공하는 GitHub Pages 저장소입니다.
 
-- 다운로드 페이지: https://josh-yun.github.io/endoumi-download/
+- 제품 홈페이지: https://josh-yun.github.io/endoumi-download/
+- 다운로드 페이지: https://josh-yun.github.io/endoumi-download/download.html
 - 설치 파일: [릴리스 목록](https://github.com/josh-yun/endoumi-download/releases)
 - 지원 운영체제: Windows 10/11, macOS
 
