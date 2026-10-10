@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="엔도우미 계정을 만들고 이메일을 확인하세요." />
+  <meta name="referrer" content="no-referrer" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src https://amqhxnpfyqywwvnxfgqu.supabase.co; form-action 'none'; base-uri 'none'; object-src 'none'" />
+  <title>회원가입 · 엔도우미</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="signup.css" />
+  <script src="app.js" defer></script>
+  <script type="module" src="signup.js"></script>
+</head>
+<body class="signup-page">
+  <header class="site-header site-header-light">
+    <a class="brand" href="index.html" aria-label="엔도우미 홈"><span class="brand-mark" aria-hidden="true">E</span><span class="brand-name">엔도우미</span></a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="primary-nav"><span class="sr-only">메뉴 열기</span><span aria-hidden="true"></span><span aria-hidden="true"></span></button>
+    <nav id="primary-nav" aria-label="주요 메뉴"><a href="index.html#overview">제품 소개</a><a href="download.html">다운로드</a><a href="signup.html" aria-current="page">회원가입</a></nav>
+  </header>
+  <main class="account-main">
+    <div class="account-intro"><p class="eyebrow dark">엔도우미 계정</p><h1>회원가입</h1><p>병원에서 사용할 이메일로 계정을 만드세요.</p></div>
+    <section class="account-body" aria-label="계정 만들기">
+      <form id="signup-form" action="#" method="post">
+        <div class="field"><label for="email">이메일</label><input id="email" name="email" type="email" autocomplete="email" required maxlength="254" placeholder="name@hospital.co.kr" /></div>
+        <div class="field"><label for="password">비밀번호</label><input id="password" name="password" type="password" autocomplete="new-password" minlength="8" maxlength="128" required aria-describedby="password-hint" /><small id="password-hint">8자 이상으로 입력해 주세요.</small></div>
+        <div class="field"><label for="password-confirm">비밀번호 확인</label><input id="password-confirm" name="password-confirm" type="password" autocomplete="new-password" minlength="8" maxlength="128" required /></div>
+        <p class="data-note">이메일과 비밀번호는 계정 생성 및 로그인에 사용됩니다. 비밀번호는 이 홈페이지에 저장하지 않습니다.</p>
+        <button id="signup-submit" class="button button-navy" type="submit">계정 만들기</button>
+        <noscript><p>회원가입하려면 브라우저에서 JavaScript를 사용하도록 설정해 주세요.</p></noscript>
+      </form>
+      <div id="account-status" class="account-status" role="status" aria-live="polite" tabindex="-1" hidden></div>
+      <button id="resend-confirmation" class="text-button" type="button" hidden>확인 이메일 다시 보내기</button>
+      <div class="account-next"><h2>가입 후 시작하기</h2><ol><li>받은 이메일에서 이메일 확인을 완료합니다.</li><li>병원 사용 승인 후 엔도우미 앱에서 로그인합니다.</li></ol><a href="download.html">앱 다운로드 안내 <span aria-hidden="true">→</span></a></div>
+    </section>
+  </main>
+  <footer class="account-footer"><a href="index.html">엔도우미 홈</a><span>내시경 업무 도우미</span></footer>
+</body>
+</html>
