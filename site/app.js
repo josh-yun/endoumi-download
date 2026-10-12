@@ -55,9 +55,9 @@ if (downloads.windows && downloads.macos && releaseStatus) {
         return;
       }
 
-      downloads.windows.href = `downloads/Endoumi-Windows-x64.exe?v=${encodeURIComponent(release.version)}`;
-      downloads.macos.href = `downloads/Endoumi-macOS.dmg?v=${encodeURIComponent(release.version)}`;
-      releaseStatus.textContent = `최신 버전 ${release.version} · ${release.publishedAt}`;
+      downloads.windows.href = `downloads/Endoumi-Windows-x64.exe?v=${encodeURIComponent(release.windowsVersion || release.version)}`;
+      downloads.macos.href = `downloads/Endoumi-macOS.dmg?v=${encodeURIComponent(release.macosVersion || release.version)}`;
+      releaseStatus.textContent = `Windows ${release.windowsVersion || release.version} · macOS ${release.macosVersion || release.version} · ${release.publishedAt}`;
     })
     .catch(() => {
       releaseStatus.textContent = "배포 기록에서 최신 설치 파일을 확인할 수 있습니다.";

@@ -33,31 +33,27 @@ jobs:
         run: |
           mkdir -p site/downloads
 
-          release_tag="$(gh release list --repo "$GITHUB_REPOSITORY" --limit 1 --json tagName --jq '.[0].tagName // empty')"
-
-          if [[ -n "$release_tag" ]]; then
-            temporary_dir="$RUNNER_TEMP/endoumi-release"
-            mkdir -p "$temporary_dir"
-            gh release download "$release_tag" --repo "$GITHUB_REPOSITORY" --dir "$temporary_dir"
-
-            macos_file="$(find "$temporary_dir" -maxdepth 1 -type f -name '*.dmg' -print -quit)"
-            windows_file="$(find "$temporary_dir" -maxdepth 1 -type f -name '*.exe' -print -quit)"
-            checksum_file="$(find "$temporary_dir" -maxdepth 1 -type f -name 'SHA256SUMS.txt' -print -quit)"
-
-            if [[ -n "$macos_file" && -n "$windows_file" ]]; then
-              cp "$macos_file" site/downloads/Endoumi-macOS.dmg
-              cp "$windows_file" site/downloads/Endoumi-Windows-x64.exe
-              [[ -z "$checksum_file" ]] || cp "$checksum_file" site/downloads/SHA256SUMS.txt
-
-              version="${release_tag#v}"
-              published_at="$(gh release view "$release_tag" --repo "$GITHUB_REPOSITORY" --json publishedAt --jq '.publishedAt[0:10]')"
-              jq -n \
-                --arg version "$version" \
-                --arg publishedAt "$published_at" \
-                '{available: true, version: $version, publishedAt: $publishedAt}' \
-                > site/release.json
+          temporary_dir="$RUNNER_TEMP/endoumi-release"
+          mkdir -p "$temporary_dir"
+          windows_version=""; macos_version=""
+          while read -r tag; do
+            if [[ -z "$windows_version" ]] && gh release download "$tag" --repo "$GITHUB_REPOSITORY" --pattern '*.exe' --dir "$temporary_dir/windows"; then
+              windows_version="${tag#v}"
             fi
-          fi
+            if [[ -z "$macos_version" ]] && gh release download "$tag" --repo "$GITHUB_REPOSITORY" --pattern '*.dmg' --dir "$temporary_dir/macos"; then
+              macos_version="${tag#v}"
+            fi
+            [[ -z "$windows_version" || -z "$macos_version" ]] || break
+          done < <(gh release list --repo "$GITHUB_REPOSITORY" --limit 30 --json tagName --jq '.[].tagName')
+          windows_file="$(find "$temporary_dir/windows" -name '*.exe' -print -quit)"
+          macos_file="$(find "$temporary_dir/macos" -name '*.dmg' -print -quit)"
+          [[ -n "$windows_file" && -n "$macos_file" ]]
+          cp "$windows_file" site/downloads/Endoumi-Windows-x64.exe
+          cp "$macos_file" site/downloads/Endoumi-macOS.dmg
+          (cd site/downloads && sha256sum Endoumi-Windows-x64.exe Endoumi-macOS.dmg > SHA256SUMS.txt)
+          published_at="$(gh release view "v$windows_version" --repo "$GITHUB_REPOSITORY" --json publishedAt --jq '.publishedAt[0:10]')"
+          jq -n --arg version "$windows_version" --arg windowsVersion "$windows_version" --arg macosVersion "$macos_version" --arg publishedAt "$published_at" \
+            '{available: true, version: $version, windowsVersion: $windowsVersion, macosVersion: $macosVersion, publishedAt: $publishedAt}' > site/release.json
 
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
