@@ -55,8 +55,8 @@ if (downloads.windows && downloads.macos && releaseStatus) {
         return;
       }
 
-      downloads.windows.href = "downloads/Endoumi-Windows-x64.exe";
-      downloads.macos.href = "downloads/Endoumi-macOS.dmg";
+      downloads.windows.href = `downloads/Endoumi-Windows-x64.exe?v=${encodeURIComponent(release.version)}`;
+      downloads.macos.href = `downloads/Endoumi-macOS.dmg?v=${encodeURIComponent(release.version)}`;
       releaseStatus.textContent = `최신 버전 ${release.version} · ${release.publishedAt}`;
     })
     .catch(() => {
